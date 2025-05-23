@@ -310,6 +310,79 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // Random Fitness Challenge
+  const randomChallengeBtn = document.getElementById("randomChallengeBtn");
+  const challengeResult = document.getElementById("challengeResult");
+
+  if (randomChallengeBtn && challengeResult) {
+    // Array of exercise challenges
+    const exercises = [
+      "jumping jacks",
+      "push-ups",
+      "squats",
+      "lunges",
+      "mountain climbers",
+      "burpees",
+      "sit-ups",
+      "high knees",
+      "plank seconds",
+      "crunches",
+    ];
+
+    randomChallengeBtn.addEventListener("click", () => {
+      // Generate random number between 1 and 100
+      const randomNumber = Math.floor(Math.random() * 100) + 1;
+
+      // Determine if number is even or odd
+      const isEven = randomNumber % 2 === 0;
+      const evenOddText = isEven ? "even" : "odd";
+
+      // Determine if number is greater than 50
+      const isGreaterThan50 = randomNumber > 50;
+      const comparisonText = isGreaterThan50
+        ? "greater than 50"
+        : "less than or equal to 50";
+
+      // Get random exercise
+      const randomExercise =
+        exercises[Math.floor(Math.random() * exercises.length)];
+
+      // Create message
+      const message = `Your number is ${randomNumber} — it's ${evenOddText} and ${comparisonText}!`;
+      const challenge = `Your challenge: Do ${randomNumber} ${randomExercise}!`;
+
+      // Determine alert type based on number
+      let alertClass = "alert-primary";
+      if (randomNumber > 75) {
+        alertClass = "alert-danger"; // Hard challenge
+      } else if (randomNumber > 50) {
+        alertClass = "alert-warning"; // Medium challenge
+      } else if (randomNumber > 25) {
+        alertClass = "alert-info"; // Moderate challenge
+      } else {
+        alertClass = "alert-success"; // Easy challenge
+      }
+
+      // Update the challenge result
+      challengeResult.innerHTML = `
+        <div class="challenge-number">${randomNumber}</div>
+        <div class="challenge-message">${message}</div>
+        <div class="challenge-exercise">${challenge}</div>
+        <div class="alert ${alertClass} challenge-alert">
+          <i class="fas fa-info-circle"></i> 
+          ${
+            isGreaterThan50
+              ? "This is a challenging workout!"
+              : "This is a good starter workout!"
+          }
+        </div>
+      `;
+
+      // Show the result with jQuery animation
+      $(challengeResult).hide().removeClass("d-none").fadeIn(500);
+    });
+  }
+
   // Nutrition Page
   const addMealBtn = document.getElementById("addMealBtn");
   const saveMealBtn = document.getElementById("saveMealBtn");
